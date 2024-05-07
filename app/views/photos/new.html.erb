@@ -1,0 +1,41 @@
+<%= form_for @photo, html: { multipart: true } do |f| %>
+  <%= f.file_field :url, multiple: true %>
+  <%= f.submit "Upload" %>
+<% end %>
+
+
+<script>
+  const photoInput = document.getElementById('photo-input');
+  const previewContainer = document.querySelector('.preview-container');
+
+  photoInput.addEventListener('change', function() {
+    previewContainer.innerHTML = '';
+
+    for (let i = 0; i < this.files.length; i++) {
+      const file = this.files[i];
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function() {
+          const img = document.createElement('img');
+          img.src = reader.result;
+          img.classList.add('preview-image');
+          previewContainer.appendChild(img);
+        }
+        reader.readAsDataURL(file);
+      } else {
+        alert('Vui lòng chỉ chọn file ảnh!');
+        this.value = '';
+      }
+    }
+  });
+</script>
+
+<style>
+  .preview-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+</style>

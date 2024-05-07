@@ -1,0 +1,31 @@
+<h1>Home</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>URL</th>
+    <th>Photo</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @photos.each do |file| %>
+    <tr>
+      <td><%= file.id %></td>
+      <td><%= file.url %></td>
+      <td><%= image_tag(root_url.chomp('/') + file.url.url, class: "img-thumbnail preview-image") if file.url? %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Upload File", new_photo_path, class: "btn btn-success" %>
+<style>
+  .preview-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+</style>
